@@ -20,13 +20,13 @@ data Velocity
   deriving (Show)
 
 mkVelocityZero :: Velocity
-mkVelocityZero = Velocity forwardV 0.0 0.0 0.0 0.0
+mkVelocityZero = Velocity forwardV 0.0 0.0 0.0 1.0
 
 mkVelocity :: Direction -> CurrentV -> TargetV -> MaxV -> Acceleration -> Velocity
 mkVelocity = Velocity
 
 setVDirection :: Direction -> Velocity -> Velocity
-setVDirection d (Velocity _ f0 f1 f2 f3) = Velocity d f0 f1 f2 f3
+setVDirection d (Velocity _d f0 f1 f2 f3) = Velocity d f0 f1 f2 f3
 
 setVTarget :: TargetV -> Velocity -> Velocity
-setVTarget t (Velocity f0 _ f1 f2 f3) = Velocity f0 t f1 f2 f3
+setVTarget t (Velocity f0 f1 _t f2 f3) = Velocity f0 f1 t f2 f3
