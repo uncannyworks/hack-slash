@@ -41,7 +41,12 @@ initGame = setStdGen . mkStdGen
     This can be useful to call for games which are turn based and don't
     require a full blown game loop to operate.
 -}
-gameIterate :: GameTime -> DeltaTime -> g -> Scene -> (GameTime -> DeltaTime -> g -> HackM g) -> (g, Scene)
+gameIterate :: GameTime                                -- ^ Total elapsed game time
+            -> DeltaTime                               -- ^ Delta time
+            -> g                                       -- ^ Game specific data
+            -> Scene                                   -- ^ Internal 'Scene' data
+            -> (GameTime -> DeltaTime -> g -> HackM g) -- ^ Game specific update function
+            -> (g, Scene)
 gameIterate gt dt g s f = runState (f gt dt g) (iterateScene gt dt s)
 
 {-| Takes the fixed rate to run at, user defined game data, and a function
@@ -59,9 +64,13 @@ gameLoop fr f fio g = loop 0.0 g mkScene
     dt = 1.0 / fr
     dt' = floor (dt * 1000) -- frame rate in microseconds
     loop !gt g0 s0 = do
+      -- time snapshot before update
       t0 <- getTime Monotonic
+
       let (g1, s1) = gameIterate gt dt g0 s0 f -- game update
       g2 <- fio gt dt s1 g1                    -- IO update
+
+      -- time snapshot after update
       t1 <- getTime Monotonic
 
       -- difference in microseconds
@@ -70,4 +79,5 @@ gameLoop fr f fio g = loop 0.0 g mkScene
       -- pause thread for difference
       threadDelay (dt' - d')
 
+      -- loop, increment total elapsed game time
       loop (gt + fr) g2 s1

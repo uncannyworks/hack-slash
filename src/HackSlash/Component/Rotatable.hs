@@ -11,7 +11,11 @@ type RotationRate = Float
 
 data Rotatable = Rotatable !Rotation !RotationRate deriving (Show)
 
-runRotatable :: DeltaTime -> Maybe Rotatable -> Maybe Transform -> Maybe (Maybe Rotatable, Transform)
+-- | Rotates the 'Entity' by the 'Rotation' and 'RotationRate' in 'Rotatable'.
+runRotatable :: DeltaTime
+             -> Maybe Rotatable
+             -> Maybe Transform
+             -> Maybe (Maybe Rotatable, Transform)
 runRotatable dt mr@(Just (Rotatable tr rr)) (Just (Transform p r c)) =
   Just (nxt, Transform p rot c)
   where

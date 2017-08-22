@@ -11,7 +11,11 @@ type ScaleRate = Float
 
 data Scaleable = Scaleable !Scale !ScaleRate deriving (Show)
 
-runScaleable :: DeltaTime -> Maybe Scaleable -> Maybe Transform -> Maybe (Maybe Scaleable, Transform)
+-- | Scales the 'Entity' by 'Scale' and 'ScaleRate' in 'Scaleable'.
+runScaleable :: DeltaTime
+             -> Maybe Scaleable
+             -> Maybe Transform
+             -> Maybe (Maybe Scaleable, Transform)
 runScaleable dt ms@(Just (Scaleable ts sr)) (Just (Transform p r s)) =
   Just (nxt, Transform p r scl)
   where

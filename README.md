@@ -1,6 +1,6 @@
 # Hack-/
 
-Hack-/ is an [Entity Component System](https://en.wikipedia.org/wiki/Entity%E2%80%93component%E2%80%93system) written in Haskell specifically for game development. At the moment it only exposes low level game primitives, however, in the future may have networking and graphical APIs added as time permits.
+Hack-/ is an [Entity Component System](https://en.wikipedia.org/wiki/Entity%E2%80%93component%E2%80%93system) written in Haskell specifically for game development. At the moment it uses a fixed step game loop and is targeted at game servers.
 
 ## Status
 

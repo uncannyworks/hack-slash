@@ -39,7 +39,8 @@ idPosition = mkPosition 0.0 0.0 0.0
 positionToTuple :: Position -> (Float, Float, Float)
 positionToTuple (V3 x y z) = (x, y, z)
 
--- | Direction is simply a type synonym for normalized vectors which point in a specific direction.
+-- | Direction is simply a type synonym for normalized vectors which point in a
+--   specific direction.
 type Direction = Position
 
 -- | Forward along the Z axis.
@@ -101,7 +102,8 @@ idTransform = mkTransform idPosition idRotation idScale
 
 -- Utils
 
--- | Returns the angle in radians between the forward facing position a and the target b.
+-- | Returns the angle in radians between the forward facing position a and the
+--   target b.
 getTargetAngle :: Position -> Position -> Rotation -> Float
 getTargetAngle a b r =
   acos (rot `dot` nrm)

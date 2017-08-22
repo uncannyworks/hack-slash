@@ -73,7 +73,11 @@ isColliding a b = isColliding b a
 isParent :: Entity -> Collider -> Bool
 isParent e (Collider _ _ _ _ _ es) = e `elem` es
 
-runCollidable :: (Entity, Maybe Collider, Maybe Transform) -> (Entity, Maybe Collider, Maybe Transform) -> Maybe Bool
+-- | Makes sure the object being collided with is not something it is attached to,
+--   and checks if it's actually colliding with the other object.
+runCollidable :: (Entity, Maybe Collider, Maybe Transform)
+              -> (Entity, Maybe Collider, Maybe Transform)
+              -> Maybe Bool
 runCollidable (e0, Just ca, Just ta) (e1, Just cb, Just tb)
   | ca /= cb && ta /= tb && not (isParent e0 cb) && not (isParent e1 ca) =
       Just $ isColliding (ca, ta) (cb, tb)
